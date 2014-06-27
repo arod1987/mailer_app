@@ -20,9 +20,7 @@ req.add_header("Content-type", "application/x-www-form-urlencoded")
 req.add_header('Authorization', encodeUserData(u, p))
 res = urllib2.urlopen(req)
 users = json.loads(res.read())['users']
-#print users
 
-#for i in users
 counter = 0
 print '{'
 for user in users:
@@ -32,9 +30,6 @@ for user in users:
 	counter += 1
 
 print '}'
-
-
-
 
 sys.stdout = orig_stdout
 f.close()

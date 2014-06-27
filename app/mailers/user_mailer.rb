@@ -4,11 +4,11 @@ class UserMailer < ActionMailer::Base
   def demo_mail(user, reviews)
     @user = user.first
     #@email = user.email
-    @email = "ishan.dutta@chronus.com"
+    @email = "astest.chronus@gmail.com"
     @reviews = reviews
     mail(:from => "Testmail@demo.com",
        :to => @email,
-       :subject => "Greet User",
+       :subject => "Review Painer Digest",
        :template => "demo_email")    
   end 
 end

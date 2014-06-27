@@ -25,13 +25,11 @@ print '{'
 for review_req in review_reqs:
 	review_req_id = review_req['id']
 	review_poster = review_req["links"]["submitter"]["title"]
-	#print review_req_id
 	review_requests_url='http://reviewboard.chronus.com/api/review-requests/'+ str(review_req_id) + '/reviews/'
-	ishan_chappu = 'http://reviewboard.chronus.com/r/'+ str(review_req_id) + '/'
-	#review_requests_url='http://reviewboard.chronus.com/api/review-requests/'+ str(7934) + '/reviews/'
+	review_url = 'http://reviewboard.chronus.com/r/'+ str(review_req_id) + '/'
 	if counter!=0:
 		print ','
-	print '"'+str(review_req_id )+'"' +":" +'{ "url": ' + '"' + ishan_chappu +'"'
+	print '"'+str(review_req_id )+'"' +":" +'{ "url": ' + '"' + review_url +'"'
 	req = urllib2.Request(review_requests_url)
 	req.add_header('Accept', 'application/json')
 	req.add_header("Content-type", "application/x-www-form-urlencoded")
@@ -40,13 +38,13 @@ for review_req in review_reqs:
 	reviews = json.loads(res.read())["reviews"]
 	rev_id_array = []
 	reviewers = []
-	pooja_bull_shit = {}
+	json_hash = {}
 	for i in reviews:
 	  rev_id_array.append(i["id"])
 	  reviewers.append(i["links"]["user"]["title"])
-	  pooja_bull_shit[i["links"]["user"]["title"]] = 0
+	  json_hash[i["links"]["user"]["title"]] = 0
 	total_missing_cnt = []
-	pooja_total_shit = 0
+	json_hash_idx = 0
 	for review_id in rev_id_array:
 	  reviews_comments_url = review_requests_url + str(review_id) + '/diff-comments/'
 	  req = urllib2.Request(reviews_comments_url)
@@ -66,7 +64,6 @@ for review_req in review_reqs:
 	  reply_cnt = 0
 	  if len(res_int_rep)!=0:
 	    reply_id = res_int_rep[0]["id"]
-	    #print res_int_rep[0]
 	    reviews_replies_url = reviews_replies_intemediate_url + str(reply_id) + '/diff-comments/'
 	    req = urllib2.Request(reviews_replies_url)
 	    req.add_header('Accept', 'application/json')
@@ -75,25 +72,19 @@ for review_req in review_reqs:
 	    res_rep = urllib2.urlopen(req)
 	    reply_cnt = json.loads(res_rep.read())["total_results"]
 	  total_missing_cnt.append((comnt_cnt-reply_cnt) if (comnt_cnt-reply_cnt>0) else 0)
-	  pooja_bull_shit [reviewers[pooja_total_shit]] += total_missing_cnt[pooja_total_shit]
-	  pooja_total_shit += 1
-	#print "total_Missing_counter is " + str(total_missing_cnt)
-	#print "List of Reviewers is " 
-	#print reviewers
+	  json_hash[reviewers[json_hash_idx]] += total_missing_cnt[json_hash_idx]
+	  json_hash_idx += 1
 	print ',"review_requester":' + "\"" +str(review_poster) +"\""
-	if review_poster in pooja_bull_shit:
-	  del pooja_bull_shit[review_poster]
-	#print pooja_bull_shit
+	if review_poster in json_hash:
+	  del json_hash[review_poster]
 	backup = {}
-	for key, value in pooja_bull_shit.items():
+	for key, value in json_hash.items():
 		if value!=0:
 			backup [str(key)] = value
-			#print key,value
-	#print backup
-	pooja_bull_shit = backup
+	json_hash = backup
 	print ',"reviewers":'
 	
-	print json.dumps(pooja_bull_shit)
+	print json.dumps(json_hash)
 	print "}"
         counter +=1
 
