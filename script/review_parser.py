@@ -24,6 +24,7 @@ counter = 0
 print '{'
 for review_req in review_reqs:
 	review_req_id = review_req['id']
+	review_poster = review_req["links"]["submitter"]["title"]
 	#print review_req_id
 	review_requests_url='http://reviewboard.chronus.com/api/review-requests/'+ str(review_req_id) + '/reviews/'
 	ishan_chappu = 'http://reviewboard.chronus.com/r/'+ str(review_req_id) + '/'
@@ -45,7 +46,6 @@ for review_req in review_reqs:
 	  reviewers.append(i["links"]["user"]["title"])
 	  pooja_bull_shit[i["links"]["user"]["title"]] = 0
 	total_missing_cnt = []
-	review_poster = ""
 	pooja_total_shit = 0
 	for review_id in rev_id_array:
 	  reviews_comments_url = review_requests_url + str(review_id) + '/diff-comments/'
@@ -67,7 +67,6 @@ for review_req in review_reqs:
 	  if len(res_int_rep)!=0:
 	    reply_id = res_int_rep[0]["id"]
 	    #print res_int_rep[0]
-	    review_poster = res_int_rep[0]["links"]["user"]["title"]
 	    reviews_replies_url = reviews_replies_intemediate_url + str(reply_id) + '/diff-comments/'
 	    req = urllib2.Request(reviews_replies_url)
 	    req.add_header('Accept', 'application/json')
