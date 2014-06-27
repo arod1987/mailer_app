@@ -3,7 +3,11 @@ class UserMailer < ActionMailer::Base
 
   def demo_mail(user, reviews)
     @user = user.first
-    #@email = user.email
+    #if user.second != nil
+    #  @email = user.second
+    #else
+    #  @email = "astest.chronus@gmail.com"
+    #end
     @email = "astest.chronus@gmail.com"
     @reviews = reviews
     mail(:from => "Testmail@demo.com",

@@ -4,7 +4,7 @@
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <style type="text/css" media="screen" class = "content">
-   h3 { color: #f00; }
+   i { color: #f00; }
    ul { list-style: none; }
   </style>
   </head>
@@ -39,7 +39,7 @@
 
 
 
-  <strong><p class="text-warning">Dear <%= @user.first%>,</p></strong>
+  <strong><p class="text-warning">Dear <%= @user %>,</p></strong>
   <p class="text-success"><%= @reviews.count %> of your reviews have comments that have not yet been addressed this week:</p>
   <p>
     <table border="0" style="width:800px">
@@ -51,9 +51,9 @@
 
     <% @reviews.each do |review| %>
     <tr style="background:#eee;color:#8b0000">
-      <td style="padding:8px"><%= review[0] %></td>	
-      <td style="padding:8px"><%= review[1] %></td>
-      <td style="padding:8px;background:#eee;color:#333"><%= review[2] %></td>
+      <td style="padding:8px"><%= review[0] %></td> 
+      <td style="padding:8px" align="center"><%= review[1] %></td>
+      <td style="padding:8px;background:#eee;color:#333" align="center"><%= review[2] %></td>
     </tr>
     <%end%>
     </table>

@@ -2,13 +2,13 @@ require 'json'
 
 class ReviewPainer
 	def self.review_painer
-		command = "python /home/arunkumar/work/rails_projects/mailer_app/script/user_parser.py"
+		#command = "python /home/arunkumar/work/rails_projects/mailer_app/script/user_parser.py"
 
-		value = `#{command}`
+		#value = `#{command}`
 
-		command = "python /home/arunkumar/work/rails_projects/mailer_app/script/review_parser.py"
+		#command = "python /home/arunkumar/work/rails_projects/mailer_app/script/review_parser.py"
 
-		value = `#{command}`
+		#value = `#{command}`
 
 		file = File.read("/home/arunkumar/work/rails_projects/mailer_app/script/out.json")
 
@@ -46,7 +46,7 @@ class ReviewPainer
 		puts answer
 
 		answer.each do |answer|
-			UserMailer.demo_mail(answer.first, answer.second).deliver!
+			UserMailer.demo_mail(answer.first.first, answer.second).deliver!
 		end
 	end
 end
